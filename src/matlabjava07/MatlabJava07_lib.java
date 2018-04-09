@@ -50,32 +50,44 @@ public class MatlabJava07_lib {
 			ml.eval("inputs = inputs';");
 			ml.eval("targets = targets';");
 			ml.eval("hiddenLayerSize = 3;");
-			ml.eval("net = patternnet(hiddenLayerSize)");
+			ml.eval("net = patternnet(hiddenLayerSize);");
 			ml.eval("net.divideParam.trainRatio = 70/100;");
 			ml.eval("net.divideParam.valRatio = 15/100;");
 			ml.eval("net.divideParam.testRatio = 15/100;");
 			ml.eval("[net,tr] = train(net,inputs,targets)");
-			ml.eval("nntraintool;");
+			ml.eval("pause(5);");
+			//ml.eval("nntraintool;");
 			ml.eval("outputs = net(inputs);");
-			//ml.eval("errors = gsubtract(targets,outputs);");
-			//ml.eval("performance = perform(net,targets,outputs)");
-			ml.eval("view(net);");
+			//ml.eval("errors = gsubtract(targets,outputs)"); //エラーになってしまう
+			//ml.eval("performance = perform(net,targets,outputs)"); //エラーになってしまう
+			
+			ml.eval("view(net)");
+			ml.eval("pause(5);");
+			
 			ml.eval("plotperform(tr)");
 			ml.eval("saveas(gcf,'plotperform(tr).png');");
 			ml.eval("pause(5);");
+			
 			ml.eval("plottrainstate(tr)");
 			ml.eval("saveas(gcf,'plottrainstate(tr).png');");
 			ml.eval("pause(5);");
+			
 			ml.eval("plotconfusion(targets,outputs);");
 			ml.eval("saveas(gcf,'plotconfusion(targets,outputs).png');");
 			ml.eval("pause(5);");
+			
 			ml.eval("[c,cm] = confusion(targets,outputs)");
 			ml.eval("fprintf('Percentage Correct Classification   : %f%%\\n', 100*(1-c));");
 			ml.eval("fprintf('Percentage Incorrect Classification : %f%%\\n', 100*c);");
+			
 			ml.eval("plotroc(targets,outputs)");
-			//ml.eval("ploterrhist(errors);");
+			ml.eval("saveas(gcf,'plotroc(targets,outputs).png')");
+			ml.eval("pause(5);");
+			
+			//ml.eval("ploterrhist(errors);"); //エラーがでる
 			//ml.eval("saveas(gcf,'ploterrhist(errors).png')");
 			//ml.eval("pause(5);");
+			
 			Future<double[][]> futureEval_outputs = ml.getVariableAsync("outputs");
 			outputs = futureEval_outputs.get();
 			
